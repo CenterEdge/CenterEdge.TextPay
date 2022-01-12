@@ -31,6 +31,9 @@ jobs:
           useConfigFile: true
           configFilePath: "GitVersion.yml"
 
+      - name: Set Version
+        run: sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
+
       - name: Display GitVersion outputs
         run: |
           echo "Major: ${{ steps.gitversion.outputs.major }}"
