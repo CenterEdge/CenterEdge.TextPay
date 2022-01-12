@@ -184,9 +184,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddUpdatePaymentRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/Payment" }
             }
           }
         },
@@ -272,7 +270,7 @@
   "info": {
     "title": "TextPay",
     "description": "TextPay API",
-    "version": "1.0",
+    "version": "2.0",
     "contact": {}
   },
   "tags": [],
@@ -605,6 +603,78 @@
         },
         "required": ["external_id", "first_name", "last_name"]
       },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "external_id": {
+            "type": "string",
+            "description": "The unique id assigned by the source system/database. If we detect a record with the same external_id, it will be updated, otherwise it will be added."
+          },
+          "gateway_transaction_id": {
+            "type": "string",
+            "description": "The unique id that was assigned to the payment record from the gateway when the payment was processed."
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The secure friendly display name of the payment method",
+            "example": "VISA **** 3421"
+          },
+          "amount": {
+            "type": "number",
+            "description": "#####.## The amount that was paid."
+          },
+          "paid_on": {
+            "format": "date-time",
+            "type": "string",
+            "description": "yyyy-MM-ddTHH:mm:ssZ The date and time of when the payment was made."
+          },
+          "tip": {
+            "type": "number",
+            "description": "#####.## The tip amount that was added."
+          },
+          "invoice": {
+            "description": "The reference to the invoice record. Use the external_id used in the Add/Update Invoice call.",
+            "allOf": [{ "$ref": "#/components/schemas/ExternalId" }]
+          },
+          "payment_type": {
+            "type": "string",
+            "description": "The type of payment method used to make the payment.",
+            "enum": ["payment_card", "ach", "cash"]
+          },
+          "payment_sub_type": {
+            "type": "string",
+            "description": "The sub type of the payment method used to make the payment.",
+            "enum": [
+              "checking",
+              "savings",
+              "visa",
+              "mastercard",
+              "discover",
+              "amex",
+              "cash",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "The current status of the payment.",
+            "default": "paid",
+            "enum": ["paid", "voided", "refunded"]
+          },
+          "active": {
+            "type": "boolean",
+            "description": "This flag represents whether the payment record is active.",
+            "default": true
+          }
+        },
+        "required": [
+          "external_id",
+          "gateway_transaction_id",
+          "display_name",
+          "amount",
+          "paid_on"
+        ]
+      },
       "Total": {
         "type": "object",
         "properties": {
@@ -676,19 +746,46 @@
             "description": "A list of line items on the invoice. This field is only required if description is not passed in.",
             "type": "array",
             "items": { "$ref": "#/components/schemas/InvoiceLine" }
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of the products/services on the invoice used in the payment request displayed to the customer. This field is only required if lines are not passed in."
+          },
+          "invoice_date": {
+            "format": "date",
+            "type": "string",
+            "description": "YYYY-MM-DD The date of the invoice. If left blank, it will default to today."
+          },
+          "due_date": {
+            "format": "date",
+            "type": "string",
+            "description": "YYYY-MM-DD The date the invoice is due."
+          },
+          "customer_memo": {
+            "type": "string",
+            "description": "A note presented to the customer on the bottom of the invoice."
+          },
+          "internal_memo": {
+            "type": "string",
+            "description": "A memo added to the bottom of the invoice and is only presented to internal staff members and never displayed to customers."
+          },
+          "active": {
+            "type": "boolean",
+            "description": "This flag represents whether the invoice record is active and available to be used or not.",
+            "default": true
+          },
+          "payments": {
+            "type": "array",
+            "description": "A list of payments made on the invoice.",
+            "items": {
+              "oneOf": [
+                { "$ref": "#/components/schemas/ExternalId" },
+                { "$ref": "#/components/schemas/Payment" }
+              ]
+            }
           }
         },
         "required": ["external_id", "invoice_number", "totals"]
-      },
-      "AddUpdatePaymentRequest": {
-        "type": "object",
-        "properties": {
-          "external_id": {
-            "type": "string",
-            "description": "The unique id assigned by the source system/database. If we detect a record with the same external_id, it will be updated, otherwise it will be added."
-          }
-        },
-        "required": ["external_id"]
       },
       "Product": {
         "type": "object",
@@ -713,20 +810,6 @@
         },
         "required": ["external_id", "name", "unit_price"]
       },
-      "InvoiceTotal": {
-        "type": "object",
-        "properties": {
-          "tax": {
-            "type": "number",
-            "description": "The tax amount on the invoice",
-            "default": 0
-          },
-          "total": {
-            "type": "number",
-            "description": "The total amount of the invoice (including tax)."
-          }
-        }
-      },
       "GetInvoiceResponse": {
         "type": "object",
         "properties": {
@@ -734,13 +817,65 @@
             "type": "string",
             "description": "The unique id assigned by the source system/database. If we detect a record with the same external_id, it will be updated, otherwise it will be added."
           },
-          "invoice_number": { "type": "string" },
+          "invoice_number": {
+            "type": "string",
+            "description": "The unique number assigned from the source system and displayed to the customer on the invoice."
+          },
           "totals": {
+            "description": "The total amounts on the invoice",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/InvoiceTotal" }
+            "items": { "$ref": "#/components/schemas/Total" }
+          },
+          "customer": {
+            "description": "A reference to the customer record. Omit this field to receive a link to the invoice.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/ExternalId" },
+              { "$ref": "#/components/schemas/Customer" }
+            ]
+          },
+          "lines": {
+            "description": "A list of line items on the invoice. This field is only required if description is not passed in.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/InvoiceLine" }
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of the products/services on the invoice used in the payment request displayed to the customer. This field is only required if lines are not passed in."
+          },
+          "invoice_date": {
+            "format": "date",
+            "type": "string",
+            "description": "YYYY-MM-DD The date of the invoice. If left blank, it will default to today."
+          },
+          "due_date": {
+            "format": "date",
+            "type": "string",
+            "description": "YYYY-MM-DD The date the invoice is due."
+          },
+          "customer_memo": {
+            "type": "string",
+            "description": "A note presented to the customer on the bottom of the invoice."
+          },
+          "internal_memo": {
+            "type": "string",
+            "description": "A memo added to the bottom of the invoice and is only presented to internal staff members and never displayed to customers."
+          },
+          "active": {
+            "type": "boolean",
+            "description": "This flag represents whether the invoice record is active and available to be used or not.",
+            "default": true
+          },
+          "payments": {
+            "type": "array",
+            "description": "A list of payments made on the invoice.",
+            "items": {
+              "oneOf": [
+                { "$ref": "#/components/schemas/ExternalId" },
+                { "$ref": "#/components/schemas/Payment" }
+              ]
+            }
           }
-        },
-        "required": ["external_id", "invoice_number", "totals"]
+        }
       }
     }
   }
