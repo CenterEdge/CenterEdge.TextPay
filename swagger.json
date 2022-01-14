@@ -98,7 +98,8 @@
             }
           }
         },
-        "tags": ["site"]
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/site/{site_id}/invoice/addUpdate": {
@@ -133,7 +134,8 @@
           },
           "404": { "description": "" }
         },
-        "tags": ["site"]
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/site/{site_id}/customer/addUpdate": {
@@ -166,7 +168,8 @@
           },
           "404": { "description": "" }
         },
-        "tags": ["site"]
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/site/{site_id}/payment/addUpdate": {
@@ -199,7 +202,8 @@
           },
           "404": { "description": "" }
         },
-        "tags": ["site"]
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/site/{site_id}/product/addUpdate": {
@@ -232,7 +236,8 @@
           },
           "404": { "description": "" }
         },
-        "tags": ["site"]
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/site/{site_id}/invoice/{external_id}": {
@@ -263,14 +268,15 @@
           },
           "404": { "description": "" }
         },
-        "tags": ["site"]
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
       }
     }
   },
   "info": {
     "title": "TextPay",
     "description": "TextPay API",
-    "version": "0.0.0-replace",
+    "version": "2.0",
     "contact": {}
   },
   "tags": [],
@@ -732,8 +738,7 @@
           },
           "totals": {
             "description": "The total amounts on the invoice",
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Total" }
+            "allOf": [{ "$ref": "#/components/schemas/Total" }]
           },
           "customer": {
             "description": "A reference to the customer record. Omit this field to receive a link to the invoice.",
@@ -823,8 +828,7 @@
           },
           "totals": {
             "description": "The total amounts on the invoice",
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Total" }
+            "allOf": [{ "$ref": "#/components/schemas/Total" }]
           },
           "customer": {
             "description": "A reference to the customer record. Omit this field to receive a link to the invoice.",
