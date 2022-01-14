@@ -29,7 +29,9 @@ jobs:
           configFilePath: "GitVersion.yml"
 
       - name: Set Version
-        run: sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
+        run: |-
+          sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
+          chmod -R 777 .
 
       - name: Build
         uses: docker://ghcr.io/centeredge/yardarm:0.2.0-alpha001
