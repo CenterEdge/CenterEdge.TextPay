@@ -34,7 +34,6 @@ jobs:
       - name: Build
         uses: docker://ghcr.io/centeredge/yardarm:0.2.0-alpha001
         with:
-          options: --user root:root
           args: yardarm generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2 }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA}
 
       - name: Push
