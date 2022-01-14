@@ -20,27 +20,25 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
+      - name: Install Yardarm
+        run: dotnet tool install --global --version 0.2.0-alpha001 Yardarm.CommandLine
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.10
+        uses: gittools/actions/gitversion/setup@v0.9.11
         with:
-          versionSpec: "5.7.0"
+          versionSpec: "5.8.1"
 
       - name: Determine Version
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.10
+        uses: gittools/actions/gitversion/execute@v0.9.11
         with:
           useConfigFile: true
           configFilePath: "GitVersion.yml"
 
       - name: Set Version
-        run: |-
-          sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
-          chmod -R 777 .
+        run: sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
 
       - name: Build
-        uses: docker://ghcr.io/centeredge/yardarm:0.2.0-alpha001
-        with:
-          args: yardarm generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2 }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA}
+        run: yardarm generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2 }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA}
 
       - name: Push
         working-directory: ./dist
