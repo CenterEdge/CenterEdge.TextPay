@@ -10,9 +10,6 @@ jobs:
   buildSdk:
     name: Build SDK
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/centeredge/yardarm:0.2.0-alpha001
-      options: --user root:root
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,7 +32,10 @@ jobs:
         run: sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
 
       - name: Build
-        run: yardarm generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2 }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA}
+        uses: docker://ghcr.io/centeredge/yardarm:0.2.0-alpha001
+        with:
+          options: --user root:root
+          args: generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2 }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA}
 
       - name: Push
         working-directory: ./dist
