@@ -23,7 +23,8 @@
             }
           }
         },
-        "tags": ["agency"]
+        "tags": ["agency"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/siteEnterprise/addUpdate": {
@@ -48,7 +49,8 @@
             }
           }
         },
-        "tags": ["siteEnterprise"]
+        "tags": ["siteEnterprise"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/siteGroup/addUpdate": {
@@ -73,7 +75,8 @@
             }
           }
         },
-        "tags": ["siteGroup"]
+        "tags": ["siteGroup"],
+        "security": [{ "api_key": [] }]
       }
     },
     "/api/v2/site/addUpdate": {
@@ -554,7 +557,7 @@
           "gateway"
         ]
       },
-      "NotificatoinOptions": {
+      "NotificationOptions": {
         "type": "object",
         "properties": {
           "notify_phone": {
@@ -604,7 +607,7 @@
           },
           "notification_options": {
             "description": "The customers preferrences for receiving notifications via text message and email.",
-            "allOf": [{ "$ref": "#/components/schemas/NotificatoinOptions" }]
+            "allOf": [{ "$ref": "#/components/schemas/NotificationOptions" }]
           }
         },
         "required": ["external_id", "first_name", "last_name"]
