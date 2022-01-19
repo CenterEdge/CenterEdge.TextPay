@@ -38,7 +38,7 @@ jobs:
         run: sed -i 's/0.0.0-replace/${{ steps.gitversion.outputs.legacySemVerPadded }}/g' swagger.json
 
       - name: Build
-        run: yardarm generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2  }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA}
+        run: yardarm generate -i ./swagger.json --nupkg ./dist/ -n CenterEdge.TextPay.Api -v ${{ steps.gitversion.outputs.nuGetVersionV2  }} -x Yardarm.SystemTextJson --repository-url https://github.com/${GITHUB_REPOSITORY}.git --repository-commit ${GITHUB_SHA} -f netstandard2.0 net6.0
 
       - name: Push
         working-directory: ./dist
