@@ -131,7 +131,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/AddUpdateResponse" }
+                "schema": { "$ref": "#/components/schemas/AddUpdateInvoiceResponse" }
               }
             }
           },
@@ -307,6 +307,17 @@
           }
         },
         "required": ["external_id", "name"]
+      },
+      "AddUpdateInvoiceResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "action": { "type": "string", "enum": ["added", "updated"] },
+          "errors": { "type": "array", "items": { "type": "string" } },
+          "link": { "type": "string" },
+          "id": { "type": "string" }
+        },
+        "required": ["success"]
       },
       "AddUpdateResponse": {
         "type": "object",
