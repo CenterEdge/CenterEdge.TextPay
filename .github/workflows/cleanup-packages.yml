@@ -1,0 +1,20 @@
+name: Cleanup packages
+
+on:
+  schedule:
+  - cron: '22 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  clean-pr-packages:
+
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+
+    steps:
+    - uses: actions/delete-package-versions@v2
+      with:
+        package-name: CenterEdge.TextPay.Api
+        min-versions-to-keep: 30
+        ignore-versions: ^(?!.*ci-pr).*$
