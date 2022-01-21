@@ -880,7 +880,7 @@
           "payments": {
             "type": "array",
             "description": "A list of payments made on the invoice.",
-            "allOf": [{ "$ref": "#/components/schemas/Payment" }]
+            "items": { "$ref": "#/components/schemas/Payment" }
           }
         }
       }
