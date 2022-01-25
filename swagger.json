@@ -731,10 +731,7 @@
           },
           "product": {
             "description": "A reference to the product record. This field is only required if the description for this line is not passed in.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/ExternalId" },
-              { "$ref": "#/components/schemas/Product" }
-            ]
+            "allOf": [{ "$ref": "#/components/schemas/Product" }]
           }
         },
         "required": ["unit_price", "qty", "total"]
@@ -846,10 +843,7 @@
           },
           "customer": {
             "description": "A reference to the customer record. Omit this field to receive a link to the invoice.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/ExternalId" },
-              { "$ref": "#/components/schemas/Customer" }
-            ]
+            "allOf": [{ "$ref": "#/components/schemas/Customer" }]
           },
           "lines": {
             "description": "A list of line items on the invoice. This field is only required if description is not passed in.",
@@ -886,12 +880,7 @@
           "payments": {
             "type": "array",
             "description": "A list of payments made on the invoice.",
-            "items": {
-              "oneOf": [
-                { "$ref": "#/components/schemas/ExternalId" },
-                { "$ref": "#/components/schemas/Payment" }
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/Payment" }
           }
         }
       }
