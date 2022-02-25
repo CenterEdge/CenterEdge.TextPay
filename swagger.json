@@ -626,6 +626,10 @@
       "Payment": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique id assigned by TextPay"
+          },
           "external_id": {
             "type": "string",
             "description": "The unique id assigned by the source system/database. If we detect a record with the same external_id, it will be updated, otherwise it will be added."
