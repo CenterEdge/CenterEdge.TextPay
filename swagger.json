@@ -643,6 +643,11 @@
             "description": "The secure friendly display name of the payment method",
             "example": "VISA **** 3421"
           },
+          "last_4": {
+            "type": "string",
+            "description": "The last 4 digits of the payment method.",
+            "example": "3421"
+          },
           "amount": {
             "type": "number",
             "description": "#####.## The amount that was paid."
