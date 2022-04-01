@@ -21,6 +21,30 @@
                 "schema": { "$ref": "#/components/schemas/AddUpdateResponse" }
               }
             }
+          },
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
           }
         },
         "tags": ["agency"],
@@ -45,6 +69,30 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/AddUpdateResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -73,6 +121,30 @@
                 "schema": { "$ref": "#/components/schemas/AddUpdateResponse" }
               }
             }
+          },
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
           }
         },
         "tags": ["siteGroup"],
@@ -97,6 +169,30 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/AddUpdateResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -135,7 +231,30 @@
               }
             }
           },
-          "404": { "description": "" }
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
         },
         "tags": ["site"],
         "security": [{ "api_key": [] }]
@@ -169,7 +288,30 @@
               }
             }
           },
-          "404": { "description": "" }
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
         },
         "tags": ["site"],
         "security": [{ "api_key": [] }]
@@ -203,7 +345,30 @@
               }
             }
           },
-          "404": { "description": "" }
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
         },
         "tags": ["site"],
         "security": [{ "api_key": [] }]
@@ -237,7 +402,30 @@
               }
             }
           },
-          "404": { "description": "" }
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
         },
         "tags": ["site"],
         "security": [{ "api_key": [] }]
@@ -269,7 +457,30 @@
               }
             }
           },
-          "404": { "description": "" }
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
         },
         "tags": ["site"],
         "security": [{ "api_key": [] }]
@@ -890,6 +1101,19 @@
             "type": "array",
             "description": "A list of payments made on the invoice.",
             "items": { "$ref": "#/components/schemas/Payment" }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "success": {
+          "type": "boolean",
+          "description": "A flag that signals if the request was successful"
+        },
+        "errors": {
+          "type": "array",
+          "description": "A list of errors returned from the endpoint",
+          "items": {
+            "type": "string"
           }
         }
       }
