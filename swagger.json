@@ -1105,15 +1105,18 @@
         }
       },
       "ErrorResponse": {
-        "success": {
-          "type": "boolean",
-          "description": "A flag that signals if the request was successful"
-        },
-        "errors": {
-          "type": "array",
-          "description": "A list of errors returned from the endpoint",
-          "items": {
-            "type": "string"
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "A flag that signals if the request was successful"
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of errors returned from the endpoint",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
