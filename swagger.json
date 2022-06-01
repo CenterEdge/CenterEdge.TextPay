@@ -859,6 +859,11 @@
             "description": "The last 4 digits of the payment method.",
             "example": "3421"
           },
+          "auth_code": {
+            "type": "string",
+            "description": "The authorization code for the payment",
+            "example": "93896G"
+          },
           "amount": {
             "type": "number",
             "description": "#####.## The amount that was paid."
