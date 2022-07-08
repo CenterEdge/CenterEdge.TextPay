@@ -581,13 +581,13 @@
       "TippingOptions": {
         "type": "object",
         "properties": {
-          "tipping_enabled": {
+          "tippingEnabled": {
             "type": "boolean",
             "default": true,
             "description": "Enable or disables the popup window that requests gratuity"
           }
         },        
-        "required": ["tipping_enabled"]
+        "required": ["tippingEnabled"]
       },
       "ExternalId": {
         "type": "object",
@@ -994,7 +994,7 @@
               { "$ref": "#/components/schemas/Customer" }
             ]
           },
-          "tippingOptions": {
+          "options": {
             "description": "A set of options for tipping on invoices",
             "allOf": [{ "$ref": "#/components/schemas/TippingOptions" }]
           },
