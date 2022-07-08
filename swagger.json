@@ -586,7 +586,7 @@
             "default": true,
             "description": "Enable or disables the popup window that requests gratuity"
           }
-        },        
+        },  
         "required": ["tippingEnabled"]
       },
       "ExternalId": {
