@@ -581,13 +581,13 @@
       "TippingOptions": {
         "type": "object",
         "properties": {
-          "tippingEnabled": {
+          "tipping_enabled": {
             "type": "boolean",
             "default": false,
             "description": "Enable or disables the popup window that requests gratuity"
           }
         },  
-        "required": ["tippingEnabled"]
+        "required": ["tipping_enabled"]
       },
       "ExternalId": {
         "type": "object",
