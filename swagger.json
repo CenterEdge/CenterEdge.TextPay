@@ -583,7 +583,7 @@
         "properties": {
           "tippingEnabled": {
             "type": "boolean",
-            "default": true,
+            "default": false,
             "description": "Enable or disables the popup window that requests gratuity"
           }
         },  
