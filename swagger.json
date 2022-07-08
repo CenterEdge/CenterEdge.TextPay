@@ -578,6 +578,16 @@
         },
         "required": ["external_id", "name"]
       },
+      "TippingOptions": {
+        "type": "object",
+        "properties": {
+          "tipping_enabled": {
+            "type": "boolean",
+            "description": "Enable or disables the popup window that requests gratuity"
+          }
+        },        
+        "required": ["tipping_enabled"]
+      },
       "ExternalId": {
         "type": "object",
         "properties": {
