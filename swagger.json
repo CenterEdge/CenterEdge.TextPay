@@ -993,7 +993,7 @@
               { "$ref": "#/components/schemas/ExternalId" },
               { "$ref": "#/components/schemas/Customer" }
             ]
-          },
+          }, 
           "options": {
             "description": "A set of options for tipping on invoices",
             "allOf": [{ "$ref": "#/components/schemas/TippingOptions" }]
