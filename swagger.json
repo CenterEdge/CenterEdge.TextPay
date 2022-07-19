@@ -931,7 +931,7 @@
           "paid_on"
         ]
       },
-      "Total": {
+      "Fee": {
         "type": "object",
         "properties": {
           "tax": {
@@ -985,7 +985,7 @@
           },
           "totals": {
             "description": "The total amounts on the invoice",
-            "allOf": [{ "$ref": "#/components/schemas/Total" }]
+            "allOf": [{ "$ref": "#/components/schemas/Fee" }]
           },
           "customer": {
             "description": "A reference to the customer record. Omit this field to receive a link to the invoice.",
@@ -1079,7 +1079,7 @@
           },
           "totals": {
             "description": "The total amounts on the invoice",
-            "allOf": [{ "$ref": "#/components/schemas/Total" }]
+            "allOf": [{ "$ref": "#/components/schemas/Fee" }]
           },
           "customer": {
             "description": "A reference to the customer record. Omit this field to receive a link to the invoice.",
