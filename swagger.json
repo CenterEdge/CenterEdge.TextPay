@@ -921,6 +921,11 @@
             "type": "boolean",
             "description": "This flag represents whether the payment record is active.",
             "default": true
+          },
+          "payment_token": {
+            "type": "string",
+            "description": "The tokenized form of the Card payment that was received at the time payment was collected.",
+            "example": "DC4:ABCD1234"
           }
         },
         "required": [
