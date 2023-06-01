@@ -578,13 +578,18 @@
         },
         "required": ["external_id", "name"]
       },
-      "TippingOptions": {
+      "InvoiceOptions": {
         "type": "object",
         "properties": {
           "tipping_enabled": {
             "type": "boolean",
             "default": false,
             "description": "Enable or disables the popup window that requests gratuity"
+          },
+          "cash_discount_disabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "If set to true, cash discount will be disabled for the invoice."
           }
         },  
         "required": ["tipping_enabled"]
@@ -877,6 +882,7 @@
           },
           "amount": {
             "type": "number",
+            "format": "decimal",
             "description": "#####.## The amount that was paid."
           },
           "paid_on": {
@@ -886,6 +892,7 @@
           },
           "tip": {
             "type": "number",
+            "format": "decimal",
             "description": "#####.## The tip amount that was added."
           },
           "invoice": {
@@ -941,12 +948,20 @@
         "properties": {
           "tax": {
             "type": "number",
+            "format": "decimal",
             "description": "The tax amount on the invoice",
             "default": 0
           },
           "total": {
             "type": "number",
+            "format": "decimal",
             "description": "The total amount of the invoice (including tax)."
+          },
+          "cash_total": {
+            "type": "number",
+            "format": "decimal",
+            "description": "The cash price of the invoice (including tax).",
+            "nullable": true
           }
         },
         "required": ["total"]
@@ -956,14 +971,17 @@
         "properties": {
           "unit_price": {
             "type": "number",
+            "format": "decimal",
             "description": "#####.## The price per unit of the line item."
           },
           "qty": {
             "type": "number",
+            "format": "int32",
             "description": "The qty of units for the line item."
           },
           "total": {
             "type": "number",
+            "format": "decimal",
             "description": "#####.## The total price of the line item. Should equal unit_price * qty."
           },
           "description": {
@@ -973,6 +991,18 @@
           "product": {
             "description": "A reference to the product record. This field is only required if the description for this line is not passed in.",
             "allOf": [{ "$ref": "#/components/schemas/Product" }]
+          },
+          "cash_unit_price": {
+            "type": "number",
+            "format": "decimal",
+            "description": "The cash price per unit of the line item.",
+            "nullable": true
+          },
+          "cash_total": {
+            "type": "number",
+            "format": "decimal",
+            "description": "The cash price of the line item. Should equal cash_unit_price * qty.",
+            "nullable": true
           }
         },
         "required": ["unit_price", "qty", "total"]
@@ -1000,8 +1030,8 @@
             ]
           }, 
           "options": {
-            "description": "A set of options for tipping on invoices",
-            "allOf": [{ "$ref": "#/components/schemas/TippingOptions" }]
+            "description": "A set of options for an invoice",
+            "allOf": [{ "$ref": "#/components/schemas/InvoiceOptions" }]
           },
           "lines": {
             "description": "A list of line items on the invoice. This field is only required if description is not passed in.",
@@ -1061,6 +1091,7 @@
           },
           "unit_price": {
             "type": "number",
+            "format": "decimal",
             "description": "#####.## The price per unit of the product."
           },
           "active": {

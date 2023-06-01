@@ -12,24 +12,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
       - name: Install Yardarm
-        run: dotnet tool install --global --version 0.3.0-beta0001 Yardarm.CommandLine
+        run: dotnet tool install --global --version 0.3.4 Yardarm.CommandLine
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.11
+        uses: gittools/actions/gitversion/setup@v0.9.15
         with:
           versionSpec: "5.8.1"
 
       - name: Determine Version
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.11
+        uses: gittools/actions/gitversion/execute@v0.9.15
         with:
           useConfigFile: true
           configFilePath: "GitVersion.yml"
