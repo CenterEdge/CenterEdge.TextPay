@@ -1,3 +1,5 @@
 # CenterEdge.TextPay
 
-Openapi 3.0 spec based on [TextPay documentation](https://new.textpay.app/docs/introduction).
+Note: TextPay (a.k.a. DashNow) is now known as Hyfin.
+
+OpenAPI 3.0 spec based on [Hyfin documentation](https://centeredge.hyfin.app/docs/2.0c/introduction).
