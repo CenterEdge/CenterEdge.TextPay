@@ -949,13 +949,19 @@
           "tax": {
             "type": "number",
             "format": "decimal",
-            "description": "The tax amount on the invoice",
+            "description": "The tax amount on the invoice when payment card price.",
             "default": 0
           },
           "total": {
             "type": "number",
             "format": "decimal",
-            "description": "The total amount of the invoice (including tax)."
+            "description": "The credit card price of the invoice (including tax)."
+          },
+          "cash_tax": {
+            "type": "number",
+            "format": "decimal",
+            "description": "The tax amount on the invoice when paying the cash price.",
+            "nullable": true
           },
           "cash_total": {
             "type": "number",
