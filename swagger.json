@@ -59,7 +59,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/SiteEnterprise" }
+              "schema": { "$ref": "#/components/schemas/AddUpdateSiteEnterpriseRequest" }
             }
           }
         },
@@ -109,7 +109,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/SiteGroup" }
+              "schema": { "$ref": "#/components/schemas/AddUpdateSiteGroupRequest" }
             }
           }
         },
@@ -590,6 +590,11 @@
             "type": "boolean",
             "default": false,
             "description": "If set to true, cash discount will be disabled for the invoice."
+          },
+          "resend": {
+            "type": "boolean",
+            "default": false,
+            "description": "If set to true and performing an update, the invoice will be re-sent to the customer via email, text or both based on the customer notification options."
           }
         },  
         "required": ["tipping_enabled"]
@@ -717,6 +722,62 @@
           }
         }
       },
+      "AddUpdateSiteEnterpriseRequest": {
+        "type": "object",
+        "properties": {
+          "external_id": {
+            "type": "string",
+            "description": "The unique id assigned by the source system/database. If we detect a record with the same external_id, it will be updated, otherwise it will be added."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the agency."
+          },
+          "agency": {
+            "description": "A reference to the agency record.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/Agency" }
+            ]
+          },
+          "active": {
+            "type": "boolean",
+            "default": true,
+            "description": "This flag represents whether the agency record is active and available to be used or not."
+          }
+        },
+        "required": ["external_id", "name", "agency"]
+      },
+      "AddUpdateSiteGroupRequest": {
+        "type": "object",
+        "properties": {
+          "external_id": {
+            "type": "string",
+            "description": "The unique id assigned by the source system/database. If we detect a record with the same external_id, it will be updated, otherwise it will be added."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the agency."
+          },
+          "agency": {
+            "description": "A reference to the agency record.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/Agency" }
+            ]
+          },
+          "site_enterprise": {
+            "description": "A reference to the site enterprise record.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/SiteEnterprise" }
+            ]
+          },
+          "active": {
+            "type": "boolean",
+            "default": true,
+            "description": "This flag represents whether the agency record is active and available to be used or not."
+          }
+        },
+        "required": ["external_id", "name", "agency"]
+      },
       "AddUpdateSiteRequest": {
         "type": "object",
         "properties": {
@@ -838,6 +899,10 @@
             "type": "string",
             "description": "The customers email address. The customers email is required if notification_options.notify_email is enabled"
           },
+          "notes": {
+            "type": "string",
+            "description": "Internal customer notes. Visible to merchant only."
+          },
           "active": {
             "type": "boolean",
             "description": "This flag represents whether the customer record is active and available to be used or not.",
@@ -894,6 +959,16 @@
             "type": "number",
             "format": "decimal",
             "description": "#####.## The tip amount that was added."
+          },
+          "tax": {
+            "type": "number",
+            "format": "decimal",
+            "description": "The tax amount that was added."
+          },
+          "fee": {
+            "type": "number",
+            "format": "decimal",
+            "description": "The fee amount that was added."
           },
           "invoice": {
             "description": "The reference to the invoice record. Use the external_id used in the Add/Update Invoice call.",
@@ -1058,6 +1133,15 @@
             "type": "string",
             "description": "YYYY-MM-DD The date the invoice is due."
           },
+          "expire_at": {
+            "format": "date",
+            "type": "string",
+            "description": "The date the invoice will expire. The request will be cancelled if it hasn't been completed."
+          },
+          "po_number": {
+            "type": "string",
+            "description": "The unique purchase order number assigned from the source system and displayed to the customer on the invoice."
+          },
           "customer_memo": {
             "type": "string",
             "description": "A note presented to the customer on the bottom of the invoice."
@@ -1080,6 +1164,15 @@
                 { "$ref": "#/components/schemas/Payment" }
               ]
             }
+          },
+          "webhook_url": {
+            "type": "string",
+            "description": "Please provide the url you would like us to post to when certain actions are performed on the invoice. Webhook notifications will be sent when a text message or email fails to be delivered, a customer clicks a link or they make a payment on the invoice."
+          },
+          "attachments": {
+            "type": "array",
+            "description": "A list of urls.",
+            "items": { "type": "string" } 
           }
         },
         "required": ["external_id", "invoice_number", "totals"]
@@ -1107,6 +1200,28 @@
           }
         },
         "required": ["external_id", "name", "unit_price"]
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "description": "Flag indicating if the notification had an error."
+          },
+          "value": {
+            "type": "string",
+            "description": "The specific contact method (email or phone) that was notified."
+          },
+          "description": {
+            "type": "string",
+            "description": "The short explanation of the type of notification that was received."
+          },
+          "at": {
+            "type": "date-time",
+            "format": "string",
+            "description": "yyyy-MM-ddTHH:mm:ssZ The date and time of when the notification was made."
+          }
+        }
       },
       "GetInvoiceResponse": {
         "type": "object",
@@ -1146,6 +1261,15 @@
             "type": "string",
             "description": "YYYY-MM-DD The date the invoice is due."
           },
+          "expire_at": {
+            "format": "date",
+            "type": "string",
+            "description": "The date the invoice will expire. The request will be cancelled if it hasn't been completed."
+          },
+          "po_number": {
+            "type": "string",
+            "description": "The unique purchase order number assigned from the source system and displayed to the customer on the invoice."
+          },
           "customer_memo": {
             "type": "string",
             "description": "A note presented to the customer on the bottom of the invoice."
@@ -1163,6 +1287,24 @@
             "type": "array",
             "description": "A list of payments made on the invoice.",
             "items": { "$ref": "#/components/schemas/Payment" }
+          },
+          "notifications": {
+            "type": "array",
+            "description": "A refrence to the notification records.",
+            "items": { "$ref": "#/components/schemas/Notification"}
+          },
+          "webhook_url": {
+            "type": "string",
+            "description": "Please provide the url you would like us to post to when certain actions are performed on the invoice. Webhook notifications will be sent when a text message or email fails to be delivered, a customer clicks a link or they make a payment on the invoice."
+          },
+          "attachments": {
+            "type": "array",
+            "description": "A list of urls.",
+            "items": { "type": "string" }
+          },
+          "options": {
+            "description": "Options to set on invoice.",
+            "allOf": [{ "$ref": "#/components/schemas/InvoiceOptions" }]
           }
         }
       },
