@@ -151,7 +151,7 @@
         "security": [{ "api_key": [] }]
       }
     },
-    "/api/v2/site/addUpdate": {
+    "/api/v3.1/site/addUpdate": {
       "post": {
         "operationId": "SiteController_addUpdateSite",
         "parameters": [],
@@ -665,6 +665,40 @@
         },
         "required": ["first_name", "last_name", "email"]
       },
+      "PaymentTypeCard": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean",
+            "description": "This flag represents whether the payment method is active and available to be used or not."
+          },
+          "gateway": {
+            "type": "object",
+            "description": "The gateway used to process credit/debit card payments.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/Gateway" }
+            ]
+          }
+        },
+        "required": ["code", "gateway_fields"]
+      },
+      "PaymentTypeACH": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean",
+            "description": "This flag represents whether the payment method is active and available to be used or not."
+          },
+          "gateway": {
+            "type": "object",
+            "description": "The gateway used to process ACH payments.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/Gateway" }
+            ]
+          }
+        },
+        "required": ["code", "gateway_fields"]
+      },
       "Gateway": {
         "type": "object",
         "properties": {
@@ -808,9 +842,12 @@
             "description": "The main person responsible for the business.",
             "allOf": [{ "$ref": "#/components/schemas/Contact" }]
           },
-          "gateway": {
-            "description": "The gateway used to access the processing account.",
-            "allOf": [{ "$ref": "#/components/schemas/Gateway" }]
+          "payment_types": {
+            "description": "The payment methods available to accept payments from customers. At least one payment method is required.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/PaymentTypeCard" },
+              { "$ref": "#/components/schemas/PaymentTypeACH" }
+            ]
           },
           "site_enterprise": {
             "description": "A reference to the site enterprise record.",
