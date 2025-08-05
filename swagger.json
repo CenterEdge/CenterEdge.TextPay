@@ -670,7 +670,8 @@
         "properties": {
           "active": {
             "type": "boolean",
-            "description": "This flag represents whether the payment method is active and available to be used or not."
+            "description": "This flag represents whether the payment method is active and available to be used or not.",
+            "default": true
           },
           "gateway": {
             "type": "object",
@@ -680,14 +681,15 @@
             ]
           }
         },
-        "required": ["code", "gateway_fields"]
+        "required": ["gateway"]
       },
       "PaymentTypeACH": {
         "type": "object",
         "properties": {
           "active": {
             "type": "boolean",
-            "description": "This flag represents whether the payment method is active and available to be used or not."
+            "description": "This flag represents whether the payment method is active and available to be used or not.",
+            "default": true
           },
           "gateway": {
             "type": "object",
@@ -697,7 +699,26 @@
             ]
           }
         },
-        "required": ["code", "gateway_fields"]
+        "required": ["gateway"]
+      },
+      "PaymentTypes": {
+        "type": "object",
+        "properties": {
+          "payment_card": {
+            "type": "object",
+            "description": "Required if you would like to enable credit/debit card transactions.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/PaymentTypeCard" }
+            ]
+          },
+          "ach": {
+            "type": "object",
+            "description": "Required if you would like to enable ACH transactions.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/PaymentTypeACH" }
+            ]
+          }
+        }
       },
       "Gateway": {
         "type": "object",
@@ -844,10 +865,7 @@
           },
           "payment_types": {
             "description": "The payment methods available to accept payments from customers. At least one payment method is required.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/PaymentTypeCard" },
-              { "$ref": "#/components/schemas/PaymentTypeACH" }
-            ]
+            "allOf": [{ "$ref": "#/components/schemas/PaymentTypes" }]
           },
           "site_enterprise": {
             "description": "A reference to the site enterprise record.",
