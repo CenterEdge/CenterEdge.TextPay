@@ -486,7 +486,7 @@
         "security": [{ "api_key": [] }]
       }
     },
-    "api/v3.1/site/{site_id}/invoices": {
+    "/api/v3.1/site/{site_id}/invoices": {
       "get": {
         "operationId": "SiteController_getInvoices",
         "parameters": [
