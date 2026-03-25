@@ -500,7 +500,10 @@
             "name": "updated_after",
             "required": true,
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": { 
+              "type": "string",
+              "format": "date-time"
+            }
           }
         ],
         "responses": {
