@@ -151,7 +151,7 @@
         "security": [{ "api_key": [] }]
       }
     },
-    "/api/v3.1/site/addUpdate": {
+    "/api/v2/site/addUpdate": {
       "post": {
         "operationId": "SiteController_addUpdateSite",
         "parameters": [],
@@ -485,6 +485,64 @@
         "tags": ["site"],
         "security": [{ "api_key": [] }]
       }
+    },
+    "/api/v3.1/site/{site_id}/invoices": {
+      "get": {
+        "operationId": "SiteController_getInvoices",
+        "parameters": [
+          {
+            "name": "site_id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "updated_after",
+            "required": true,
+            "in": "query",
+            "schema": { 
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetInvoicesResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Returned on invalid requests",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Returned when requests are throttled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Returned when an error occurs on the Hyfin side",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["site"],
+        "security": [{ "api_key": [] }]
+      }
     }
   },
   "info": {
@@ -665,61 +723,6 @@
         },
         "required": ["first_name", "last_name", "email"]
       },
-      "PaymentTypeCard": {
-        "type": "object",
-        "properties": {
-          "active": {
-            "type": "boolean",
-            "description": "This flag represents whether the payment method is active and available to be used or not.",
-            "default": true
-          },
-          "gateway": {
-            "type": "object",
-            "description": "The gateway used to process credit/debit card payments.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/Gateway" }
-            ]
-          }
-        },
-        "required": ["gateway"]
-      },
-      "PaymentTypeACH": {
-        "type": "object",
-        "properties": {
-          "active": {
-            "type": "boolean",
-            "description": "This flag represents whether the payment method is active and available to be used or not.",
-            "default": true
-          },
-          "gateway": {
-            "type": "object",
-            "description": "The gateway used to process ACH payments.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/Gateway" }
-            ]
-          }
-        },
-        "required": ["gateway"]
-      },
-      "PaymentTypes": {
-        "type": "object",
-        "properties": {
-          "payment_card": {
-            "type": "object",
-            "description": "Required if you would like to enable credit/debit card transactions.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/PaymentTypeCard" }
-            ]
-          },
-          "ach": {
-            "type": "object",
-            "description": "Required if you would like to enable ACH transactions.",
-            "oneOf": [
-              { "$ref": "#/components/schemas/PaymentTypeACH" }
-            ]
-          }
-        }
-      },
       "Gateway": {
         "type": "object",
         "properties": {
@@ -863,9 +866,9 @@
             "description": "The main person responsible for the business.",
             "allOf": [{ "$ref": "#/components/schemas/Contact" }]
           },
-          "payment_types": {
-            "description": "The payment methods available to accept payments from customers. At least one payment method is required.",
-            "allOf": [{ "$ref": "#/components/schemas/PaymentTypes" }]
+          "gateway": {
+            "description": "The gateway used to access the processing account.",
+            "allOf": [{ "$ref": "#/components/schemas/Gateway" }]
           },
           "site_enterprise": {
             "description": "A reference to the site enterprise record.",
@@ -1360,6 +1363,33 @@
           "options": {
             "description": "Options to set on invoice.",
             "allOf": [{ "$ref": "#/components/schemas/InvoiceOptions" }]
+          }
+        }
+      },
+      "GetInvoicesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether the query action ran successfully."
+          },
+          "records_matched": {
+            "type": "integer",
+            "description": "The total number of records that matched the query."
+          },
+          "records_returned": {
+            "type": "integer",
+            "description": "The number of records that are being returned in the response."
+          },
+          "next_updated_after": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The updated_at timestamp to be used in the next request."
+          },
+          "records": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Invoice"},
+            "description": "Invoices returned by the query up to 1,000 records."
           }
         }
       },
