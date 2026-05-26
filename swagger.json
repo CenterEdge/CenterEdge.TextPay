@@ -1388,7 +1388,7 @@
           },
           "records": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Invoice"},
+            "items": { "$ref": "#/components/schemas/GetInvoiceResponse"},
             "description": "Invoices returned by the query up to 1,000 records."
           }
         }
