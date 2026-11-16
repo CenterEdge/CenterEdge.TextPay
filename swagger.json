@@ -687,7 +687,7 @@
             "description": "2-digit state abbreviation code of the business location."
           },
           "zip_code": {
-            "type": "number",
+            "type": "string",
             "description": "5-digit zip code of the the business location."
           },
           "phone": {
