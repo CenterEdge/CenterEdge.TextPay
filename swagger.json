@@ -577,11 +577,16 @@
         },
         "required": ["external_id", "name"]
       },
+      "AddUpdateAction": {
+        "type": "string",
+        "description": "Whether the add/update call created a new record or updated an existing one.",
+        "enum": ["added", "updated"]
+      },
       "AddUpdateInvoiceResponse": {
         "type": "object",
         "properties": {
           "success": { "type": "boolean" },
-          "action": { "type": "string", "enum": ["added", "updated"] },
+          "action": { "$ref": "#/components/schemas/AddUpdateAction" },
           "errors": { "type": "array", "items": { "type": "string" } },
           "link": { "type": "string" },
           "id": { "type": "string" }
@@ -592,7 +597,7 @@
         "type": "object",
         "properties": {
           "success": { "type": "boolean" },
-          "action": { "type": "string", "enum": ["added", "updated"] },
+          "action": { "$ref": "#/components/schemas/AddUpdateAction" },
           "errors": { "type": "array", "items": { "type": "string" } },
           "id": { "type": "string" }
         },
